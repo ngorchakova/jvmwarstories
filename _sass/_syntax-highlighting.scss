@@ -3,10 +3,9 @@
  */
 .highlight {
     background: #fff;
-    @extend %vertical-rhythm;
 
     .highlighter-rouge & {
-  background: #eef;
+      background: #eef;
     }
 
     .c     { color: #998; font-style: italic } // Comment
@@ -17,8 +16,8 @@
     .cp    { color: #999; font-weight: bold } // Comment.Preproc
     .c1    { color: #998; font-style: italic } // Comment.Single
     .cs    { color: #999; font-weight: bold; font-style: italic } // Comment.Special
-    .gd    { color: #000;} // Generic.Deleted
-    .gd .x { color: #000;} // Generic.Deleted.Specific
+    .gd    { color: #000; } // Generic.Deleted
+    .gd .x { color: #000; } // Generic.Deleted.Specific
     .ge    { font-style: italic } // Generic.Emph
     .gr    { color: #a00 } // Generic.Error
     .gh    { color: #999 } // Generic.Heading

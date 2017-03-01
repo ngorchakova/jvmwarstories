@@ -14,11 +14,14 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-    font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
     color: $text-color;
-    background-color: transparent;
     text-rendering: optimizeLegibility;
-    text-shadow: 0 0 1px #ccc;
+       @include media-query($on-palm) {
+        font-size: 1em;
+    }
 }
 
 
@@ -41,6 +44,7 @@ ul, ol, dl, figure,
 img {
     max-width: 100%;
     vertical-align: middle;
+    border-radius: 5px;
 }
 
 
@@ -52,6 +56,9 @@ figure > img {
     display: block;
 }
 
+figcaption {
+    font-size: $small-font-size;
+}
 
 
 
@@ -74,9 +81,49 @@ li {
 /**
  * Headings
  */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
+h1{
+    font-size: 2.5em;
+    @include media-query($on-laptop) {
+        font-size: 2em;
+    }
 }
+h2{
+    font-size: 1.6em;
+    @include media-query($on-laptop) {
+        font-size: 1.2em;
+    }
+}
+
+h3{
+    font-size: 1.2em;
+    @include media-query($on-laptop) {
+        font-size: 0.9em;
+    }
+}
+
+h4 {
+        font-size: 1em;
+    @include media-query($on-laptop) {
+        font-size: 0.8em;
+    }
+}
+
+h5{
+        font-size: 0.9em;
+    @include media-query($on-laptop) {
+        font-size: 0.7em;
+    }
+    
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: $base-font-weight;
+    font-family: 'Alfa Slab One', cursive, sans-serif;
+    
+  
+}
+
 
 
 
@@ -87,10 +134,8 @@ a {
     color: $brand-color;
     text-decoration: none;
 
-
-    &:hover {
-        color: $color-2;
-        text-decoration: none;
+   &:hover {
+        color: $comp-color;
     }
 }
 
@@ -100,12 +145,13 @@ a {
  * Blockquotes
  */
 blockquote {
-    color: $text-color;
+    font-family: serif;
+    color: $grey-color;
+    border: 1px solid $grey-color-light;
     border-left: 4px solid $brand-color;
     padding-left: $spacing-unit / 2;
-    font-size: 16px;
-    letter-spacing: -1px;
     font-style: italic;
+    margin-left: 1em;
 
     > :last-child {
         margin-bottom: 0;
@@ -117,22 +163,27 @@ blockquote {
 /**
  * Code formatting
  */
+
+.highlighter-rouge {
+    font-family: inherit;
+}
+
 pre,
 code {
-    font-size: 15px;
-    border: 1px solid $brand-color;
     border-radius: 3px;
-    background-color: transparent;
+    border: 1px solid $brand-color;
+    text-shadow: 0 0 0.1px;
 }
 
 code {
     padding: 1px 5px;
-    
 }
 
 pre {
     padding: 8px 12px;
     overflow-x: auto;
+    font-size: 0.8em;
+
     > code {
         border: 0;
         padding-right: 0;
@@ -140,5 +191,40 @@ pre {
     }
 }
 
+
+
+/**
+ * Wrapper
+ */
+.wrapper {
+    max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: $spacing-unit;
+    padding-left: $spacing-unit;
+    @extend %clearfix;
+
+    @include media-query($on-laptop) {
+        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+        max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+        padding-right: $spacing-unit / 2;
+        padding-left: $spacing-unit / 2;
+    }
+}
+
+
+
+/**
+ * Clearfix
+ */
+%clearfix {
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
 
 
