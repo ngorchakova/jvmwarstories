@@ -6,8 +6,8 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: "JVM War Stories"
-title-font-size: '4em' # a provision to adjust the size of your title. If it is too long then do resize to a smaller value. By default it will be 4em.
+title: "JVM Based War Stories"
+title-font-size: '2em' # a provision to adjust the size of your title. If it is too long then do resize to a smaller value. By default it will be 4em.
 
 email: natalia.menshikova@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
