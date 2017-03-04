@@ -1,8 +1,8 @@
 ---
 layout: post
-title: ETA expansion causes additional serialization
-date: 2016-12-18 00:00:00 +00:00
-tags: [compiler, eta-expansion, scala, serialization]
+title: Backpressure for spark streaming
+date: 2016-12-23 00:00:00 +00:00
+tags: [kafka, spark, streaming]
 ---
 There is very useful feature for spark streaming jobs: back pressure. To enable it the only one parameter should be set. 
 
