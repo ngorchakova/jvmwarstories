@@ -4,13 +4,10 @@ title: About
 permalink: /about/
 ---
 
-Vyaasa is a Jekyll theme created for a no-distraction reader-friendly websites. It is free and open source project. 
+I try to collect problems/challanges that I face with during my work. Some posts can be based on my own experience, some on team members'. I hope that information in these posts will be usefull for others.
 
-For more themes visit - [**Webjeda Jekyll Themes**](https://blog.webjeda.com/jekyll-themes/){: target="_blank"}
+## About me
+[**linkedIn profile**](https://www.linkedin.com/in/natalia-gorchakova-7913603/)
 
-For Jekyll tutorials visit - [**Webjeda**](https://blog.webjeda.com/){: target="_blank"}
-
-Does the theme deserve a star?
-
-<a class="github-button" href="https://github.com/sharu725/vyaasa" data-style="mega" data-count-href="/sharu725/vyaasa/stargazers" data-count-api="/repos/sharu725/vyaasa#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star sharu725/vyaasa on GitHub">Star</a>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+I have over 9 years of experience as Java developer. For the first 5 years I worked on enterprise projects (including web part). Last 4 years I worked as Java server side developer with the full development cycle: from start to production support on Linux servers. 
+Right now I'm taking responsibility of technical team lead in 'big data' team in [**IG**](https://www.ig.com).
