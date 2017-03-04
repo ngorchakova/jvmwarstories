@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DStream: updateStateByKey vs mapWithState
+title: DStream updateStateByKey vs mapWithState
 date: 2017-01-13 00:00:00 +00:00
 tags: [spark, streaming]
 ---
