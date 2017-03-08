@@ -1,6 +1,6 @@
 ---
 layout: post
-title: spark.streaming.kafka.maxRatePerPartition with compacted topic
+title: maxRatePerPartition with compacted topic
 date: 2016-12-15 00:00:00 +00:00
 tags: "spark streaming kafka"
 ---
