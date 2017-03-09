@@ -20,6 +20,8 @@ Searching similar problems in google gave result of [spark jira ticket]( https:/
 Setting param `spark.locality.wait` to 0 seconds resolve the problem.
 
 ### What is data locality
+Data locality is used to describe how spark maps tasks and input data. It is done to minimize overhead to transfer input data to task. [Here0(http://codingcat.me/2016/02/29/how-spark-decides-preferredlocation-for-a-task/) you can find detaied post how Spark calculates data locality for RDD.
+
 according to [spark documentation](http://spark.apache.org/docs/latest/tuning.html) there are 5 types of data locality:
 * PROCESS_LOCAL
 * NODE_LOCAL
@@ -27,6 +29,14 @@ according to [spark documentation](http://spark.apache.org/docs/latest/tuning.ht
 * RACK_LOCAL
 * ANY
 
+After some node finished current work, Spark starts look for new task for it. Going though all pending tasks Spark tries to find task with data locality not greater than the current MaxDataLocality. MaxDataLocality is calculated based on diff between current time and last launch time: `curTime - lastLaunchTime >= localityWaits(currentLocalityIndex)`. 
+
+Wait time is configured by spark job configuration:
+* spark.locality.wait (change wait time for all cases)
+* spark.locality.wait.node (for NODE_LOCAL)
+* spark.locality.wait.process (for PROCESS_LOCAL)
+* spark.locality.wait.rack (for RACK_LOCAL)
+
 >The wait timeout for fallback between each level can be configured individually or all together in one parameter; see the spark.locality parameters on the configuration [page for details](http://spark.apache.org/docs/latest/configuration.html#scheduling).
 
-Class [org.apache.spark.scheduler.TaskSetManager](https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/scheduler/TaskSetManager.scala) contains the logic of recalculating locality levels available for execution.
+See class [org.apache.spark.scheduler.TaskSetManager](https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/scheduler/TaskSetManager.scala) for mode detailed logic of recalculating locality levels available for execution.
