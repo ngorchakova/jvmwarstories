@@ -19,3 +19,13 @@ part of this file:
   ...
 
 In case of hortoworks distribution, path of this file is /usr/hdp/hadoop_version/spark/lib/spark-assembly-spark+hadoop_version.jar 
+
+Additionaly you do not need to provive in your jar:
+* spark-core
+* spark-bagel
+* spark-mllib
+* spark-streaming
+* spark-graphx
+* spark-sql
+
+Anything else for spark should be added to jar. For example: spark-streaming-kafka
