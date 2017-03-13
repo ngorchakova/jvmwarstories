@@ -20,7 +20,7 @@ Searching similar problems in google gave result of [spark jira ticket]( https:/
 Setting param `spark.locality.wait` to 0 seconds resolve the problem.
 
 ### What is data locality
-Data locality is used to describe how spark maps tasks and input data. It is done to minimize overhead to transfer input data to task. [Here0(http://codingcat.me/2016/02/29/how-spark-decides-preferredlocation-for-a-task/) you can find detaied post how Spark calculates data locality for RDD.
+Data locality is used to describe how spark maps tasks and input data. It is done to minimize overhead to transfer input data to task. [Here](http://codingcat.me/2016/02/29/how-spark-decides-preferredlocation-for-a-task/) you can find detaied post how Spark calculates data locality for RDD.
 
 according to [spark documentation](http://spark.apache.org/docs/latest/tuning.html) there are 5 types of data locality:
 * PROCESS_LOCAL
