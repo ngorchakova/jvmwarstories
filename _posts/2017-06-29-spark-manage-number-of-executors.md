@@ -40,11 +40,14 @@ returns true if request of received successfully.
 Not straightforward way to get executor ids that are used now. 
 
 {% highlight scala %}
-    val allExecutorIds = sc.getExecutorStorageStatus.sortBy(status => -status.numBlocks).map(status => status.blockManagerId.executorId).filter(_ != "driver")
+val allExecutorIds = sc
+         .getExecutorStorageStatus.sortBy(status => -status.numBlocks)
+         .map(status => status.blockManagerId.executorId)
+         .filter(_ != "driver")
 {% endhighlight %}
 
 Request to kill executor is available on spark context
 
 {% highlight scala %}
-     val killResult = sc.killExecutors(executorsIdsToRemove)
+val killResult = sc.killExecutors(executorsIdsToRemove)
 {% endhighlight %}
