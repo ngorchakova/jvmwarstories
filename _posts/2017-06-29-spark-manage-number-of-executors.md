@@ -12,7 +12,7 @@ However, we faced with issue that dynamic allocation doesn't work properly for s
 
 > spark.dynamicAllocation.executorIdleTimeout: If dynamic allocation is enabled and an executor has been idle for more than this duration, the executor will be removed [more](https://spark.apache.org/docs/1.6.1/job-scheduling.html#resource-allocation-policy)
 
-So, spark removes executor only if it doesn't receive any task for a while. As there is always a chance that working with a task from micro-batch will be assigned to executor, it will be unlikely removed. 
+So, spark removes executor only if it doesn't receive any task for a while. As there is always a chance that a task from micro-batch will be assigned to executor, it will be unlikely removed. 
 
 ## Manual allocation
 
