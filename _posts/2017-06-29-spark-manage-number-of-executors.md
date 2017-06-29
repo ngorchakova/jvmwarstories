@@ -37,7 +37,7 @@ returns true if request of received successfully.
 
 #### delete executors
 
-Not straightforward way to get executor ids that are used now. 
+Not straightforward way to get executor ids that are used to invoke killExecutors later. 
 
 {% highlight scala %}
 val allExecutorIds = sc
