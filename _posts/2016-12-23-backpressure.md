@@ -21,7 +21,7 @@ val derived = conf.getDouble("spark.streaming.backpressure.pid.derived", 0.0)
 val minRate = conf.getDouble("spark.streaming.backpressure.pid.minRate", 100)
 {% endhighlight %}
 
-Based on these params new PIDRateEstimator ([**sourceCode**]((https://github.com/apache/spark/blob/master/streaming/src/main/scala/org/apache/spark/streaming/scheduler/rate/PIDRateEstimator.scala))) is created. It should be possible in the future to use another estimator (param "spark.streaming.backpressure.rateEstimator").
+Based on these params new PIDRateEstimator [**sourceCode**](https://github.com/apache/spark/blob/master/streaming/src/main/scala/org/apache/spark/streaming/scheduler/rate/PIDRateEstimator.scala) is created. It should be possible in the future to use another estimator (param "spark.streaming.backpressure.rateEstimator").
 
 ### Story about spark 1.6, kafka 0.9
 
