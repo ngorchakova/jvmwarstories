@@ -22,7 +22,7 @@ dstream.foreachRDD { rdd =>
 
 ## Problem
 
-This code means, that for every RDD for every microbatch, new kafak producer will be created. This common approach was working for a long time for us. Until we deployed spark job with microbatch size 500ms and 64 partitions. After several days of running, we noticed, that GC on kafka jvm is not performing good (constant major GC). 
+This code means, that for every RDD for every microbatch, new kafka producer will be created. This common approach was working for a long time for us. Until we deployed spark job with microbatch size 500ms and 64 partitions. After several days of running, we noticed, that GC on kafka jvm is not performing good (constant major GC). 
 
 ![kafka GC]({{site.baseurl}}/resources/2017-07-12_01.jpg)
 
@@ -30,7 +30,7 @@ Heap dump of kafka showed that there were huge amount of JMX metrics for kafka p
 There is one post in [stackoverflow](https://stackoverflow.com/questions/44184795/kafka-broker-memory-leak-triggered-by-many-consumers) that looks similar to our problem.
 
 ## Solution
-Obvious soltuion: decrease of amount new producers created. That mean that we should reuse the same producer. I found 2 approaches to achieve that:
+Obvious soltuion: decrease of amount new producers created. That mean that we should reuse the same producer. There are 2 posts for (Marcin Kuthan)[http://mkuthan.github.io/]
 1. broadcast lazy initialized kafka procuder to each executor
 2. hold map of producers in object (singleton)
 
@@ -38,7 +38,7 @@ Both solutions are working. However, second one requires less code changes.
 
 ### Broadcast producer
 
-Found in [allergo technical blog](http://allegro.tech/2015/08/spark-kafka-integration.html).
+First post in [allergo technical blog](http://allegro.tech/2015/08/spark-kafka-integration.html).
 
 {% highlight scala %}
 class KafkaSink(createProducer: () => KafkaProducer[String, String]) extends Serializable {
@@ -74,7 +74,8 @@ dstream.foreachRDD { rdd =>
 
 ### Hold map of producers in object (singleton)
 
-Found in [Marcin Kuthan blog](http://mkuthan.github.io/blog/2016/01/29/spark-kafka-integration2/). Interesting that he worked in Allegro when wrote that arcitical (first approach was also from Allegro technical blog).
+[second post](http://mkuthan.github.io/blog/2016/01/29/spark-kafka-integration2/). 
+Partial code
 
 {% highlight scala %}
 object KafkaProducerFactory {
@@ -103,3 +104,5 @@ dstream.foreachRDD { rdd =>
   }
 }
 {% endhighlight %}
+
+For more details I suggest to look in [github](https://github.com/mkuthan/example-spark-kafka)
