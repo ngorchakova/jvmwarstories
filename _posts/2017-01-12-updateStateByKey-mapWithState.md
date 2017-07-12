@@ -45,11 +45,11 @@ and the similar code for `mapWithState`:
 {% endhighlight %}
 
 Streaming timeline:
-1. micro batch contains one message 'a'
-    `UpdateStateByKey`: new values = 1 oldValue=None  (for key=a. No value before)
-    `UpdateStateByKey`: key=a value=1
-    `MapWithState`: key=a value=Some(1) state=1
-    `MapWithState`: key=a value=1
+* micro batch contains one message 'a'
+    * `UpdateStateByKey`: new values = 1 oldValue=None  (for key=a. No value before)
+    * `UpdateStateByKey`: key=a value=1
+    * `MapWithState`: key=a value=Some(1) state=1
+    * `MapWithState`: key=a value=1
 2. micro batch contains messages 'a' and 'b'
 ...`UpdateStateByKey`: new values = 1 oldValue=Some(1) (for key a. Old value is 1)
 ...`UpdateStateByKey`: new values = 1 oldValue=None (for key b. No value before)
