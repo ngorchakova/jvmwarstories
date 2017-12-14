@@ -4,12 +4,12 @@ title: Confluent vs Hortonworks avro compatibility check
 date: 2017-12-14 00:00:00 +00:00
 tags: [avro, confluent, hortonworks]
 ---
-### Version
+## Versions
 Confluent schemaRegistry - 3.1.2
 Hortonworks schemaRegistry - 0.3.0
 
 ## Case
-By mistake new required field was added to avro schema and confluent schema registry didn't complained about that. Later, during migration schemas to Hotronworks schemaRegistry, this problems arose.
+By mistake new required field was added to avro schema and confluent schema registry didn't complained about that. Later, during migration schemas to Hotronworks schemaRegistry, this problem arose.
 
 Simplified schema examples:
 
@@ -40,7 +40,7 @@ Simplified schema examples:
 }
 {% endhighlight %}
 
-next version of schema with one more required field `required2`
+next version of the schema with one more required field `required2`
 
 {% highlight json %}
 {
@@ -74,6 +74,7 @@ next version of schema with one more required field `required2`
 {% endhighlight %}
 
 check compatibility
+
 {% highlight scala %}
 
 public void testRealSchemas() throws IOException {
