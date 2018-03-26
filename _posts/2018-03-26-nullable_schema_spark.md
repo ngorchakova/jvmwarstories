@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Nullable schema if read avro fiels by spark
+title: Nullable schema if read avro files by spark
 date: 2018-03-26 00:00:00 +00:00
 tags: [avro, spark]
 ---
