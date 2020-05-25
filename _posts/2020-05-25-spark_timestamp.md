@@ -6,17 +6,19 @@ tags: [spark, avro, databricks, timestamp]
 ---
 ## Environment
 We have a spark job (spark version 2.2.0) that reads avro files, massages them and saves them as avro and parquet files back.  
-One of actions performed is: converting two fields (epoch seconds and nanos) to one field timestamp (and casting it to spark logical type TimestampType)
+One of the actions performed is: converting two fields (epoch seconds and nanos) to one field timestamp (and casting it to spark logical type TimestampType)
+{% highlight scala %}
+convertToMillis(df.col("seconds"), df.col("nanoseconds")).cast(TimestampType)
+{% endhighlight %}
 
-`convertToMillis(df.col("seconds"), df.col("nanoseconds")).cast(TimestampType)`
 
-After this restuled avro files are uploaded to Redshift. The corresponding column in Redshift is TIMESTAMP. 
+After this resulted avro files are uploaded to Redshift. The corresponding column in Redshift is TIMESTAMP. 
 
 
 ## Problem
-During upgrade of spark from 2.2.0 to 2.4.4 uploading to Redshift stopped working. 
+During the upgrade of spark from 2.2.0 to 2.4.4 uploading to Redshift stopped working. 
 
-What has changed: in version 2.4.0 built-in Avro support was added to Spark [SPARK-24768](https://issues.apache.org/jira/browse/SPARK-24768) (to replace databricks spark-avro library). As result in the new version spark stores timestamp field as a long in *microseconds*, while in the old version in *milliseconds*. If the avro files are processed only by spark (old or new version), the change is invisible. However, if you use a vanila avro library to read the data, the value will be 1000 bigger than expected.   
+What has changed: in version 2.4.0 built-in Avro support was added to Spark [SPARK-24768](https://issues.apache.org/jira/browse/SPARK-24768) (to replace databricks spark-avro library). As a result in the new version spark stores timestamp field as a long in *microseconds*, while in the old version in *milliseconds*. If the avro files are processed only by spark (old or new version), the change is invisible. However, if you use a vanilla avro library to read the data, the value will be 1000 bigger than expected.   
 
 ## Example how to reproduce
 
@@ -68,23 +70,37 @@ private def getSchema = new Schema.Parser().parse(new File(getClass.getResource(
 private def createRecordWithEpochSeconds(schema: Schema, epochSeconds: Long) =
     new GenericRecordBuilder(schema).set("epochSeconds", epochSeconds).build()
 
+private def readOneRecordFromAvro(destinationFile: File): GenericRecord = {
+    TryWithResources(
+        new DataFileReader[GenericRecord](destinationFile, new GenericDatumReader[GenericRecord])) {
+      reader => reader.next()
+    }
+}
+
+private def readOneRecordFromParquet(destinationFile: File): GenericRecord ={
+    val hadoopInputFile = HadoopInputFile.fromPath(new Path(s"file://${destinationFile.getPath}"),  new Configuration)
+    TryWithResources(
+        AvroParquetReader.builder[GenericRecord](hadoopInputFile).build) {
+      reader => reader.read()
+    }
+}
 {% endhighlight %}
 
 
 For spark 2.4.0 only small changes in the code are required and the databricks library needs to be replaced with org.apache.spark:spark-avro_2.11:2.4.0
-{% highlight scala %} 
+{% highlight scala %}
 castedDf.write.mode(SaveMode.Overwrite).format("avro").save(s"file://${tempCastedAvroDestination.getPath}")
 {% endhighlight %}
 
 After this the last assertion is failing. As the epochSeconds_casted column has a value in microseconds (not in milliseconds as before). The schema after version upgrade looks as
-{% highlight json %} 
+{% highlight json %}
 {
     "name" : "epochSeconds_casted",
     "type" : [ {
       "type" : "long",
       "logicalType" : "timestamp-micros"
     }, "null" ]
-x}
+}
 {% endhighlight %}
 
 ## Workaround
