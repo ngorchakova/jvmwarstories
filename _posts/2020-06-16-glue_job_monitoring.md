@@ -40,6 +40,7 @@ So, the goal was to push a proper message to SNS. That was achieved by CloudWatc
 
 ## Terraform script to provision cloud watch event rule
 
+terraform 0.11
 
 {% highlight json %}
 resource "aws_cloudwatch_event_rule" "glue_monitoring_rule" {
@@ -80,5 +81,23 @@ resource "aws_cloudwatch_event_target" "rule_target_sns" {
 }
 TEMPLATE
   }
+}
+{% endhighlight %}
+
+## Permissions configuration for CloudWatch Event rule + SNS
+
+Please refer to the [issue](https://github.com/terraform-providers/terraform-provider-aws/issues/5946). 
+
+When CloudWatch Event rule is created to publish events to SNS via console the permission to principal `events.amazonaws.com` is granted automatically. When you create the similar rule via terraform, this permission has to be granted manually to the destination SNS. 
+ 
+{% highlight json %}
+{
+    "Sid": "__cloudwatch_events",
+    "Effect": "Allow",
+    "Principal": {
+        "Service": "events.amazonaws.com"
+    },
+    "Action": "sns:Publish",
+    "Resource": "${aws_sns_topic.alert_sns.arn}"
 }
 {% endhighlight %}
